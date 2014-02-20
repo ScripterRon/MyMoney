@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.4  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Ronald Hoffman">
+	<META NAME="CREATED" CONTENT="20120623;10331695">
+	<META NAME="CHANGEDBY" CONTENT="Ronald Hoffman">
+	<META NAME="CHANGED" CONTENT="20120625;14060431">
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<H1><FONT FACE="Arial"><FONT SIZE=5>Credit Account</FONT></FONT></H1>
+<P>A credit account represents charges and payments for a credit card
+or line of credit. A bank account is used for debit card charges
+since the money is deducted directly from a checking account.
+Transactions in a credit account can be reconciled with statements
+received from the bank.</P>
+<P>A transaction can be assigned a category (such as Cable, Dividend,
+Interest, Utilities, etc). The category is used when generating a
+transaction report and when estimating taxes. You do not need to
+assign a category to a transaction (the default is no category when
+you create a transaction).</P>
+<P>Instead of a category, a transaction can be assigned a transfer
+account. Transfer accounts appear in the Category/Account field with
+the name enclosed in &ldquo;[]&rdquo;. This causes money used to make
+a payment to be withdrawn from the transfer account. You create just
+a single transaction which affects two accounts (you do not create a
+separate transaction in the bank account to represent the payment).
+You can create the payment transaction in either the bank account or
+the credit account, specifying the other account as the transfer
+account.</P>
+<P>The memo is an optional field which is used to describe the
+transaction.</P>
+<P>You must specify a charge or payment amount.</P>
+<P>You should leave the Not Reconciled button selected when you
+create a transaction. Refer to the Reconciling Transactions section
+for more information.</P>
+<H2><FONT FACE="Arial"><FONT SIZE=4><I>Account Functions</I></FONT></FONT></H2>
+<UL>
+	<LI><P>New Transaction &ndash; Create a new credit transaction.</P>
+	<LI><P>Edit Transaction &ndash; Modify an existing credit
+	transaction.</P>
+	<LI><P>Delete Transaction &ndash; Delete an existing credit
+	transaction.</P>
+	<LI><P>Reconcile Transactions &ndash; Reconcile transactions with a
+	bank statement.</P>
+</UL>
+<H2><FONT FACE="Arial"><FONT SIZE=4><I>Reconciling Transactions</I></FONT></FONT></H2>
+<P>When you reconcile transactions, you indicate which transactions
+appear on your bank statement. This is done by pressing the Reconcile
+Transactions button and then entering the ending balance from the
+statement (this will normally be a negative value indicating you owe
+money). A dialog will be displayed listing all of the unreconciled
+transactions for the account. Each time you click on a transaction, a
+'c' is added or removed for the transaction. The 'c' indicates
+reconcile is pending for the transaction. 
+</P>
+<P>For each transaction that appears on your statement, click on the
+corresponding transaction in the Reconcile Transactions dialog. As
+you proceed, the reconciled balance at the bottom of the dialog will
+be updated (the target balance is the ending balance that you
+entered). When you have checked all of the transactions on the
+statement, the difference displayed at the bottom of the dialog
+should be 0.00. 
+</P>
+<P>When you are finished, press the Done button and the pending
+transactions will be marked as reconciled (the 'c' will change to 'C'
+and the transactions will not appear the next time you reconcile
+transactions). 
+</P>
+<P>If you need to modify or add a transaction, press the Finish Later
+button. This will save the pending reconcile status for the
+transactions so you won't need to redo them when you come back to
+finish reconciling the transactions.</P>
+<P>If you want to cancel the pending changes, press the Cancel
+button. The pending reconcile status will be removed from the
+transactions.</P>
+<P>If you mistakenly reconciled a transaction and pressed the Done
+button, you can undo the change by editing the transaction and
+selecting the Not Reconciled button.</P>
+</BODY>
+</HTML>

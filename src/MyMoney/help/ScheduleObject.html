@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.4  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Ronald Hoffman">
+	<META NAME="CREATED" CONTENT="20120625;13292231">
+	<META NAME="CHANGEDBY" CONTENT="Ronald Hoffman">
+	<META NAME="CHANGED" CONTENT="20120627;11250079">
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<H1><FONT FACE="Arial"><FONT SIZE=5>Schedules</FONT></FONT></H1>
+<P>A schedule is a transaction which is executed at fixed intervals. 
+Each time MyMoney starts, it will check for scheduled transactions. 
+If the schedule date has been reached, the transaction will be
+recorded and then the schedule date will be set to the next interval.
+ A schedule is useful for any transaction which occurs at fixed
+intervals for a fixed amount.</P>
+<H2><FONT FACE="Arial"><FONT SIZE=4><I>Schedule Types</I></FONT></FONT></H2>
+<UL>
+	<LI><P>Biweekly &ndash; The scheduled transaction is processed every
+	two weeks</P>
+	<LI><P>Monthly &ndash; The scheduled transaction is processed each
+	month</P>
+	<LI><P>Single &ndash; The scheduled transaction is processed and
+	then deleted</P>
+	<LI><P>Weekly &ndash; The scheduled transaction is processed each
+	week</P>
+</UL>
+<H2><FONT FACE="Arial"><FONT SIZE=4><I>Schedule Fields</I></FONT></FONT></H2>
+<UL>
+	<LI><P>Type &ndash; The schedule processing interval.</P>
+	<LI><P>Date &ndash; The initial schedule date.  The date will be
+	updated each time the schedule is processed.</P>
+	<LI><P>Description &ndash; Descriptive text for the schedule.</P>
+	<LI><P>Account &ndash; The transaction account</P>
+	<LI><P>Category/Account &ndash; The transaction category or the
+	transfer account.</P>
+	<LI><P>Payment &ndash; The payment amount for an expense transaction</P>
+	<LI><P>Deposit &ndash; The deposit amount for an income transaction</P>
+</UL>
+<H2><FONT FACE="Arial"><FONT SIZE=4><I>Transaction Splits</I></FONT></FONT></H2>
+<P>Transaction splits are used when a schedule transaction has
+multiple components.  For example, a salary payment may contain
+federal and state withholding with the balance being deposited in a
+checking account.  Or a loan payment would consist of interest and
+principal payments.  In these cases, you would create a transaction
+split with a split transaction for each component of the schedule
+transaction.</P>
+</BODY>
+</HTML>

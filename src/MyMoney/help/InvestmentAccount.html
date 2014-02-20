@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.4  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Ronald Hoffman">
+	<META NAME="CREATED" CONTENT="20120623;10331695">
+	<META NAME="CHANGEDBY" CONTENT="Ronald Hoffman">
+	<META NAME="CHANGED" CONTENT="20120625;11171817">
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<H1><FONT FACE="Arial"><FONT SIZE=5>Investment Account</FONT></FONT></H1>
+<P>An investment account contains securities such as certificates of
+deposit, bonds, stocks and treasury notes.  An investment account has
+a linked bank account to manage the cash position when an investment
+is bought, sold or provides income.  The investment account and the
+linked bank account may be managed as a single account by the
+financial institution or they may be separate accounts at the same or
+different financial institutions.</P>
+<P>Each investment transaction has an associated action.  You can
+specify an optional category to further classify the transaction. 
+The remaining fields are used based on the action selected.</P>
+<H2><FONT FACE="Arial"><FONT SIZE=4><I><FONT FACE="Arial"><FONT SIZE=4>Account
+Functions</FONT></FONT></I></FONT></FONT></H2>
+<UL>
+	<LI><P>New Transaction &ndash; Create a new investment transaction.</P>
+	<LI><P>Edit Transaction &ndash; Modify an existing investment
+	transaction.</P>
+	<LI><P>Delete Transaction &ndash; Delete an existing investment
+	transaction.</P>
+</UL>
+<H2><FONT FACE="Arial"><FONT SIZE=4><I>Investment Actions</I></FONT></FONT></H2>
+<UL>
+	<LI><P>Buy &ndash; Buy shares of a security.  Specify the number of
+	shares in the S<I>hares</I> field, the price per share in the P<I>rice</I>
+	field, the commission in the <I>Commission</I> field and the cost in
+	the A<I>mount</I>  field.  The share price times the number of
+	shares represents the cost basis for the security.  The amount
+	specified will be deducted from the linked bank account.</P>
+	<UL>
+		<LI><P>The cost for a bond does not include accrued interest. 
+		Accrued interest is recorded as a separate <I>Expense</I>
+		transaction for the security.</P>
+		<LI><P>The share price for a bond is often quoted for a 100-share
+		lot.  For example, a $10,000 bond would be priced at $100/share for
+		100 shares.  
+		</P>
+		<LI><P>It is convenient to set the share price to $1.00 for
+		fixed-income instruments which reinvest interest.  This makes it
+		easier to record the reinvestment since the number of shares
+		reinvested is the same as the amount of interest received.</P>
+	</UL>
+	<LI><P>Exchange &ndash; Exchange shares of one security for shares
+	in another security.  The A<I>mount</I>  field is the cost basis of
+	the new security.  The S<I>hares</I> and N<I>ew Shares</I> fields
+	record the number of shares exchanged for the original security and
+	the number of shares received for the new security.  The cost basis
+	of the original security will be reduced based on the number of
+	shares exchanged.</P>
+	<LI><P>Expense &ndash; Record an expense for a security in the
+	<I>Amount</I> field.  For example, accrued interest paid when
+	purchasing a bond or foreign tax paid when receiving a dividend. 
+	Use the C<I>ategory</I> field to classify the type of expense.  The
+	amount will be deducted from the linked bank account.</P>
+	<LI><P>Income &ndash; Record income for a security in the <I>Amount
+	</I>field.  For example, interest for a bond or dividend for a
+	stock.  Use the C<I>ategory</I> field to classify the type of
+	income.  The amount will be added to the linked bank account.</P>
+	<LI><P>Reinvest &ndash; Record reinvested income.  The S<I>hares</I>
+	field contains the number of shares received and the A<I>mount</I> 
+	field contains the amount of income received.  The cost basis of the
+	security will be increased by the amount of income received.  The
+	amount will be added to the linked bank account.</P>
+	<LI><P>RtnCapital &ndash; Record a return of capital for a security
+	in the <I>Amount</I> field.  The cost basis for the security will be
+	reduced by the amount returned.  The amount will be added to the
+	linked bank account.</P>
+	<LI><P>Sell &ndash; Sell shares of a security.  Specify the number
+	of shares in the S<I>hares</I> field, the price per share in the
+	P<I>rice</I> field, the commission in the <I>Commission</I> field
+	and the proceeds in the A<I>mount</I>  field.  The amount specified
+	will be added to the linked bank account.  In order to calculate the
+	cost basis for the sale, the correct accounting method must be
+	selected.</P>
+	<UL>
+		<LI><P>FIFO &ndash; First In, First Out.  Shares are sold starting
+		with the first shares purchased.  The cost basis is the total cost
+		of the shares sold.  This is the normal method when selling stock.</P>
+		<LI><P>LIFO &ndash; Last In, First Out.  Shares are sold starting
+		with the last shares purchased.  The cost basis is the total cost
+		of the shares sold.</P>
+		<LI><P>Avg Cost &ndash; Average cost.  The average cost of all
+		shares is calculated and this value is then multiplied by the
+		number of shares sold to get the cost basis.  This is the normal
+		method for a mutual fund.  Once the average cost method is selected
+		for a security, it must be used for all subsequent sales of that
+		security in order to get the correct cost basis.</P>
+	</UL>
+	<LI><P>SpinOff &ndash; Shares of a new security are received as a
+	result of a spin-off from the original security.  The number of
+	shares for the original security remains unchanged by the spin-off. 
+	The A<I>mount</I>  field is the cost basis of the new security.  The
+	N<I>ew Shares</I> field records the number of shares received for
+	the new security.  The cost basis of the original security will be
+	reduced by the cost basis of the new security.</P>
+	<LI><P>Split &ndash; Record a stock split.  The <I>Shares</I> field
+	contains the number of shares received or lost.  For example, in a
+	2:1 split of 100 shares, you would receive 100 shares for a total of
+	200 shares after the split (the <I>Shares</I> field would be 100). 
+	In a 1:2 split of 100 shares, you would lose 50 shares for a total
+	of 50 shares after the split (the <I>Shares</I> field would be -50).
+	 The cost basis for the security is unchanged by the split.</P>
+</UL>
+<P>Partial shares received from an exchange, spin-off or stock split
+are usually sold immediately by the broker and you receive cash in
+lieu of the shares.  In this case, you should record all of the
+shares in the exchange, spin-off or stock split transaction.  You
+should then create a separate sell transaction to record the cash in
+lieu.  This causes the correct cost basis to be calculated for the
+remaining shares.</P>
+</BODY>
+</HTML>
