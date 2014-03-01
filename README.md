@@ -37,14 +37,14 @@ I use the Netbeans IDE but any build environment with the Java compiler availabl
 
 Here are the steps for a manual build:
 
-  - Create 'doc', and 'classes' directories under the MyMoney directory (the directory containing 'src')
+  - Create 'doc' and 'classes' directories under the MyMoney directory (the directory containing 'src')
   - Download Java SE Development Kit 7: http://www.oracle.com/technetwork/java/javase/downloads/index.html
   - Change to the MyMoney directory (with subdirectories 'doc', 'classes' and 'src')
   - Build the classes: javac @build-list
   - Build the jar: jar cmf manifest.mf MyMoney.jar -C classes . -C resources .
   - Build the documentation: javadoc @doc-list
   - Copy MyMoney.jar to wherever you want to store the executables.
-  - Create a shortcut to start MyMoney using javas.exe.  For example:
+  - Create a shortcut to start MyMoney using javaw.exe.  For example:
   
       javaw.exe -Xmx256m -jar path-to-executables\MyMoney.jar
   
