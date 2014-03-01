@@ -5,30 +5,28 @@ import java.util.SortedSet;
 
 import javax.swing.*;
 import javax.swing.event.*;
-import java.awt.*;
-import java.awt.event.*;
 
 /**
  * The NameDocumentListener class provides type-ahead for the transaction name.
- * As the user enters characters in the name field, the text will be updated 
+ * As the user enters characters in the name field, the text will be updated
  * with the first matching selection from the supplied name list.  The type-ahead
  * characters will be updated as the user continues to enter data into the name field.
  */
 public final class NameDocumentListener implements DocumentListener, Runnable {
-    
+
     /** The text field */
     private JTextField nameField;
-    
+
     /** The set of names */
     private SortedSet<String> nameList;
 
     /** The current text */
     private String currentText = "";
-    
+
     /** Ignore document events */
     private boolean ignoreEvents = false;
-    
-    /** 
+
+    /**
      * Create a new document listener for the name text field
      *
      * @param       field           The text field to be monitored
@@ -38,11 +36,11 @@ public final class NameDocumentListener implements DocumentListener, Runnable {
         nameField = field;
         nameList = names;
     }
-    
+
     /**
      * Create a new document listener instance and add it to the
      * document listeners for the supplied text field.
-     * 
+     *
      * @param       field           The text field to be monitored
      * @param       names           The suggested names
      */
@@ -50,52 +48,56 @@ public final class NameDocumentListener implements DocumentListener, Runnable {
         NameDocumentListener listener = new NameDocumentListener(field, names);
         field.getDocument().addDocumentListener(listener);
     }
-    
+
     /**
      * Attribute changed (DocumentListener interface)
-     * 
+     *
      * @param       event           Document event
      */
-    public void changedUpdate(DocumentEvent e) {
+    @Override
+    public void changedUpdate(DocumentEvent event) {
     }
-    
+
     /**
      * Text inserted into document (DocumentListener interface)
-     * 
+     *
      * @param       event           Document event
      */
-    public void insertUpdate(DocumentEvent e) {
+    @Override
+    public void insertUpdate(DocumentEvent event) {
         if (!ignoreEvents) {
             ignoreEvents = true;
             SwingUtilities.invokeLater(this);
         }
     }
-    
+
     /**
      * Text removed from document (DocumentListener interface)
-     * 
+     *
      * @param       event           Document event
      */
-    public void removeUpdate(DocumentEvent e) {
+    @Override
+    public void removeUpdate(DocumentEvent event) {
         if (!ignoreEvents) {
             ignoreEvents = true;
             SwingUtilities.invokeLater(this);
         }
     }
-    
+
     /**
      * Update the text based on what has been entered so far
      *
      * This method is called after all pending events have been processed
      * (the document cannot be changed while processing a document event)
      */
+    @Override
     public void run() {
-            
+
         //
         // Get the updated text field
         //
         String text = nameField.getText();
-        
+
         //
         // Suggest a name if the text has changed.  The new name will start
         // with the characters entered so far and the caret will be
@@ -112,21 +114,21 @@ public final class NameDocumentListener implements DocumentListener, Runnable {
                 String name = nameIterator.next();
                 if (name.equals(text))
                     break;
-                
+
                 if (name.startsWith(text)) {
                     nameField.setText(name);
                     nameField.setCaretPosition(name.length());
                     nameField.moveCaretPosition(text.length());
                     break;
                 }
-                
+
                 if (name.compareTo(text) > 0)
                     break;
             }
-            
+
             currentText = text;
         }
-        
+
         //
         // Allow document events to be processed
         //

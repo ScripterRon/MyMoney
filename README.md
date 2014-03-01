@@ -27,4 +27,24 @@ Help is provided in the program using html files.  You can also browse the help 
 
 There are no external dependencies.  I use the Netbeans IDE but you should be able to use anything that supports the Java compiler.  Documentation is generated from the source code using javadoc.
 
-A compiled version of the program is available: https://sites.google.com/site/ronsworkspace/mymoney
+A compiled version of the program is available: https://drive.google.com/folderview?id=0B1312_6UqRHPRXF0bUZOYzcwSkk&usp=sharing
+
+
+Build
+=====
+
+I use the Netbeans IDE but any build environment with the Java compiler available should work.  The documentation is generated from the source code using javadoc.
+
+Here are the steps for a manual build:
+
+  - Create 'doc', and 'classes' directories under the MyMoney directory (the directory containing 'src')
+  - Download Java SE Development Kit 7: http://www.oracle.com/technetwork/java/javase/downloads/index.html
+  - Change to the MyMoney directory (with subdirectories 'doc', 'classes' and 'src')
+  - Build the classes: javac @build-list
+  - Build the jar: jar cmf manifest.mf MyMoney.jar -C classes . -C resources .
+  - Build the documentation: javadoc @doc-list
+  - Copy MyMoney.jar to wherever you want to store the executables.
+  - Create a shortcut to start MyMoney using javas.exe.  For example:
+  
+      javaw.exe -Xmx256m -jar path-to-executables\MyMoney.jar
+  

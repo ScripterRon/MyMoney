@@ -2,7 +2,6 @@ package MyMoney;
 
 import Report.*;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +20,7 @@ public final class AmountSumFunction extends AbstractFunction {
 
     /** The name of the transfer account field */
     private String transferAccountField;
-    
+
     /** The names of loan accounts to be included in the sum */
     private List<String> loanAccountNames;
 
@@ -59,12 +58,12 @@ public final class AmountSumFunction extends AbstractFunction {
     public void setTransferAccountField(String name) {
         transferAccountField = name;
     }
-    
+
     /**
      * Set the loan accounts names.  A transaction for a loan account will be
      * included in the sum.  The account name must include the enclosing brackets.
      *
-     * @param       names           List of loan account names
+     * @param       accountNames    List of loan account names
      */
     public void setLoanAccountNames(List<String> accountNames) {
         loanAccountNames = accountNames;
@@ -77,6 +76,7 @@ public final class AmountSumFunction extends AbstractFunction {
      *
      * @param       event           The report event
      */
+    @Override
     public void reportStarted(ReportEvent event) {
         sum = 0.0;
         startSum = 0.0;
@@ -89,6 +89,7 @@ public final class AmountSumFunction extends AbstractFunction {
      *
      * @param       event           The report event
      */
+    @Override
     public void groupStarted(ReportEvent event) {
 
         //
@@ -106,6 +107,7 @@ public final class AmountSumFunction extends AbstractFunction {
      *
      * @param       event           The report event
      */
+    @Override
     public void rowAdvanced(ReportEvent event) {
         NumberFormat nf = NumberFormat.getNumberInstance();
 
@@ -130,7 +132,7 @@ public final class AmountSumFunction extends AbstractFunction {
                                 ((String)transferAccount).charAt(0) == '[') {
                 if (loanAccountNames == null)
                     return;
-                
+
                 String transferAccountName = (String)transferAccount;
                 boolean skipSum = true;
                 for (String name : loanAccountNames) {
@@ -139,7 +141,7 @@ public final class AmountSumFunction extends AbstractFunction {
                         break;
                     }
                 }
-                
+
                 if (skipSum)
                     return;
             }
@@ -155,7 +157,7 @@ public final class AmountSumFunction extends AbstractFunction {
             try {
                 sum += nf.parse((String)fieldValue).doubleValue();
             } catch (Exception exc) {
-                
+
             }
         }
     }
@@ -165,6 +167,7 @@ public final class AmountSumFunction extends AbstractFunction {
      *
      * @return                      The formatted string
      */
+    @Override
     public Object getValue() {
         if (Math.abs(sum) < 0.005)
             sum = 0.00;
@@ -175,6 +178,7 @@ public final class AmountSumFunction extends AbstractFunction {
     /**
      * Reset the sum when regenerating a report page
      */
+    @Override
     public void resetValue() {
         sum = startSum;
     }
@@ -186,6 +190,7 @@ public final class AmountSumFunction extends AbstractFunction {
      *
      * @return                      The cloned report function
      */
+    @Override
     public Object clone() {
 
         //

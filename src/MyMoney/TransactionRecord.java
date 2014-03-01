@@ -71,38 +71,38 @@ public final class TransactionRecord implements Cloneable {
 
     /** Return of capital */
     public static final int RETURN_OF_CAPITAL=7;
-    
+
     /** Bond amortization (bond bought at a premium) */
     public static final int AMORTIZATION=8;
-    
+
     /** Bond accretion (bond bought at a discount) */
     public static final int ACCRETION=9;
-    
+
     /** Exchange shares */
     public static final int EXCHANGE=10;
-    
+
     /** Receive shares in a new company */
     public static final int SPIN_OFF=11;
 
     /** Supported transaction actions */
     private static final int[] actions =
-        {BUY, SELL, INCOME, EXPENSE, SPLIT, REINVEST, RETURN_OF_CAPITAL, AMORTIZATION, 
+        {BUY, SELL, INCOME, EXPENSE, SPLIT, REINVEST, RETURN_OF_CAPITAL, AMORTIZATION,
             ACCRETION, EXCHANGE, SPIN_OFF};
-    
+
     /** Transaction action strings */
     private static final String[] actionStrings = {
-        "Buy", "Sell", "Income", "Expense", "Split", "Reinvest", "RtnCapital", 
+        "Buy", "Sell", "Income", "Expense", "Split", "Reinvest", "RtnCapital",
         "Amortization", "Accretion", "Exchange", "SpinOff"};
-    
+
     /** Accounting method - FIFO */
     public static final int FIFO=0;
-    
+
     /** Accounting method - LIFO */
     public static final int LIFO=1;
-    
+
     /** Accounting method - Average cost */
     public static final int AVG_COST=2;
-    
+
     /** Source account reconcile is pending */
     public static final int SOURCE_PENDING=1;
 
@@ -135,7 +135,7 @@ public final class TransactionRecord implements Cloneable {
 
     /** Investment security */
     private SecurityRecord security;
-    
+
     /** New investment security */
     private SecurityRecord newSecurity;
 
@@ -153,7 +153,7 @@ public final class TransactionRecord implements Cloneable {
 
     /** Number of shares */
     private double shares;
-    
+
     /** Number of new shares */
     private double newShares;
 
@@ -165,7 +165,7 @@ public final class TransactionRecord implements Cloneable {
 
     /** Transaction action */
     private int action;
-    
+
     /** Accounting method */
     private int accountingMethod;
 
@@ -183,6 +183,9 @@ public final class TransactionRecord implements Cloneable {
 
     /**
      * Create a new transaction
+     *
+     * @param       date            Transaction date
+     * @param       account         Transaction account
      */
     public TransactionRecord(Date date, AccountRecord account) {
         if (date == null)
@@ -243,7 +246,7 @@ public final class TransactionRecord implements Cloneable {
             account = AccountRecord.getAccount(accountID);
             if (account == null)
                 throw new DBException("Account "+accountID+" is not defined");
-            
+
             account.addReference();
 
             //
@@ -256,7 +259,7 @@ public final class TransactionRecord implements Cloneable {
                 category = CategoryRecord.getCategory(categoryID);
                 if (category == null)
                     throw new DBException("Category "+categoryID+" is not defined");
-                
+
                 category.addReference();
             }
 
@@ -270,7 +273,7 @@ public final class TransactionRecord implements Cloneable {
                 transferAccount = AccountRecord.getAccount(transferID);
                 if (transferAccount == null)
                     throw new DBException("Transfer account "+transferID+" is not defined");
-                
+
                 transferAccount.addReference();
             }
 
@@ -292,7 +295,7 @@ public final class TransactionRecord implements Cloneable {
                 security = SecurityRecord.getSecurity(securityID);
                 if (security == null)
                     throw new DBException("Security "+securityID+" is not defined");
-                
+
                 security.addReference();
             }
 
@@ -342,7 +345,7 @@ public final class TransactionRecord implements Cloneable {
             if (seq.getLength() != 0 &&
                         seq.getTag() == (byte)(Asn1Stream.ASN1_CONTEXT_SPECIFIC+8))
                 action = seq.decodeInteger(true);
-            
+
             //
             // The new security is encoded as an optional context-specific field
             // with identifier 9
@@ -353,10 +356,10 @@ public final class TransactionRecord implements Cloneable {
                 newSecurity = SecurityRecord.getSecurity(securityID);
                 if (newSecurity == null)
                     throw new DBException("Security "+securityID+" is not defined");
-                
+
                 newSecurity.addReference();
             }
-            
+
             //
             // The number of new security shares is encoded as an optional context-specific
             // field with identifier 10
@@ -364,7 +367,7 @@ public final class TransactionRecord implements Cloneable {
             if (seq.getLength() != 0 &&
                         seq.getTag() == (byte)(Asn1Stream.ASN1_CONTEXT_SPECIFIC+10))
                 newShares = seq.decodeDouble(true);
-            
+
             //
             // The accounting method is encoded as an optional context-specific
             // field with identifier 11
@@ -378,9 +381,9 @@ public final class TransactionRecord implements Cloneable {
             //
             if (seq.getLength() != 0)
                 throw new DBException("Unconsummed data in TransactionRecord sequence");
-            
+
         } catch (Asn1Exception exc) {
-            
+
             throw new DBException("ASN.1 decode error", exc);
         }
     }
@@ -417,7 +420,7 @@ public final class TransactionRecord implements Cloneable {
         if (accountingMethod != 0)
             seqLength += stream.encodeInteger(accountingMethod,
                                              (byte)(Asn1Stream.ASN1_CONTEXT_SPECIFIC+11));
-        
+
         //
         //  The number of new security shares is encoded as an optional context-specific
         //  field with identifier 10
@@ -431,7 +434,7 @@ public final class TransactionRecord implements Cloneable {
             seqLength += stream.encodeInteger(newSecurity.getID(),
                                               (byte)(Asn1Stream.ASN1_CONTEXT_SPECIFIC+9));
         }
-        
+
         //
         //  The action is encoded as an optional context-specific field
         //  with identifier 8
@@ -581,20 +584,20 @@ public final class TransactionRecord implements Cloneable {
     public void setShares(double shares) {
         this.shares = (double)Math.round(shares*10000.0)/10000.0;
     }
-    
+
     /**
      * Get the number of new shares
-     * 
+     *
      * @return                      Shares
      */
     public double getNewShares() {
         return newShares;
     }
-    
+
     /**
      * Set the number of new shares.  The number of shares is maintained with
      * 4 decimal digits.
-     * 
+     *
      * @param       shares          Shares
      */
     public void setNewShares(double shares) {
@@ -708,16 +711,16 @@ public final class TransactionRecord implements Cloneable {
         if (this.security != null)
             this.security.addReference();
     }
-    
+
     /**
      * Get the new security
-     * 
+     *
      * @return                      SecurityRecord reference or null
      */
     public SecurityRecord getNewSecurity() {
         return newSecurity;
     }
-    
+
     /**
      * Set the new security
      *
@@ -792,26 +795,26 @@ public final class TransactionRecord implements Cloneable {
     public void setCheckNumber(int checkNumber) {
         this.checkNumber = checkNumber;
     }
-    
+
     /**
      * Get the accounting method for a SELL transaction
-     * 
+     *
      * @return                      Accounting method
      */
     public int getAccountingMethod() {
         return accountingMethod;
     }
-    
+
     /**
      * Set the accounting method for a SELL transaction
-     * 
+     *
      * @param       accountingMethod    Accounting method
      */
     public void setAccountingMethod(int accountingMethod) {
         if (accountingMethod != FIFO && accountingMethod != LIFO &&
                                         accountingMethod != AVG_COST)
             throw new IllegalArgumentException("Transaction accounting method "+accountingMethod+" is invalid");
-        
+
         this.accountingMethod = accountingMethod;
     }
 
@@ -855,20 +858,20 @@ public final class TransactionRecord implements Cloneable {
      */
     public static String getActionString(int action) {
         String retValue = null;
-        
+
         for (int i=0; i<actions.length; i++) {
             if (actions[i] == action) {
                 retValue = actionStrings[i];
                 break;
             }
         }
-        
+
         if (retValue == null)
             retValue = new String();
 
         return retValue;
     }
-    
+
     /**
      * Get the supported actions
      *
@@ -877,7 +880,7 @@ public final class TransactionRecord implements Cloneable {
     public static int[] getActions() {
         return actions;
     }
-    
+
     /**
      * Get the actions strings
      *
@@ -985,7 +988,7 @@ public final class TransactionRecord implements Cloneable {
 
             if (security != null)
                 security.removeReference();
-            
+
             if (newSecurity != null)
                 newSecurity.removeReference();
 
@@ -1014,12 +1017,12 @@ public final class TransactionRecord implements Cloneable {
     public static int insertTransaction(TransactionRecord transaction) {
         return insertTransaction(transactions, transaction);
     }
-    
+
     /**
      * Insert a transaction into a transaction list
      *
-     * @param       transactionList     The transaction list
-     * @param       transfer            Transaction to be inserted
+     * @param       transactions        The transaction list
+     * @param       transaction         Transaction to be inserted
      * @return                          The index of the inserted transaction
      */
     public static int insertTransaction(List<TransactionRecord> transactions, TransactionRecord transaction) {
@@ -1055,6 +1058,7 @@ public final class TransactionRecord implements Cloneable {
      *
      * @return                      Cloned transaction
      */
+    @Override
     public Object clone() {
         Object clonedObject;
         try {

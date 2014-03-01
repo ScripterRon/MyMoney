@@ -1,6 +1,14 @@
+# Build directories
+classes/
+doc/
+package/
+
+# Build files
 *.class
 
 # Package Files #
 *.jar
 *.war
 *.ear
+*.zip
+
