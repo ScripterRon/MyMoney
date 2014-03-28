@@ -39,6 +39,7 @@ Here are the steps for a manual build.  You will need to install Maven 3 and Jav
   - [Optional] Create the documentation: mvn javadoc:javadoc
   - [Optional] Copy target/MyMoney-v.r.jar to wherever you want to store the executable.
   - Create a shortcut to start MyMoney using javaw.exe. 
+  
 		javaw -Xmx256m -jar MyMoney-v.r.jar
 
 	
