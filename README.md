@@ -1,7 +1,7 @@
 MyMoney
 =======
 
-MyMoney is a money management application written in Java.  It supports checking, savings, credit card, investment, mortgage and asset accounts.  It is general use except for the estimated tax function, which is set up for filing taxes in New York (and even then it is a very rough estimate of what you will owe).  Printed reports can be generated for transactions, income/expense categories, accounts and investments.
+MyMoney is a money management application written in Java.  It supports checking, savings, credit card, investment, mortgage and asset accounts.  Printed reports can be generated for transactions, income/expense categories, accounts and investments.
 
 The following account classes are supported:
   - Bank accounts
@@ -25,8 +25,6 @@ Reports can be generated for capital gains, stock holdings, and transactions.  A
  
 Help is provided in the program using html files.  You can also browse the help files outside of the program using a web browser.  The help files are stored in src/MyMoney/help.
 
-There are no external dependencies.  I use the Netbeans IDE but you should be able to use anything that supports the Java compiler.  Documentation is generated from the source code using javadoc.
-
 A compiled version is available: https://drive.google.com/folderview?id=0B1312_6UqRHPRXF0bUZOYzcwSkk&usp=sharing.  Download the desired archive file and extract the files to a directory of your choice.  The files are signed with the GPG key for Ronald.Hoffman6@gmail.com (D6190F05).
 
 
@@ -44,4 +42,3 @@ Here are the steps for a manual build.  You will need to install Maven 3 and Jav
 		javaw -Xmx256m -jar MyMoney-v.r.jar
 
 	
- 
