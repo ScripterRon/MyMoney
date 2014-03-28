@@ -23,7 +23,7 @@ Income and expense transactions are classified by category (Medical, Automobile,
  
 Reports can be generated for capital gains, stock holdings, and transactions.  A net worth graph can be generated for any period of time.  Stock prices can be automatically updated through an internet connection (the program uses Yahoo! to retrieve the current stock quotes).
  
-Help is provided in the program using html files.  You can also browse the help files outside of the program using a web browser.  The help files are stored in src/MyMoney/help.
+Help is provided in the program using html files.  You can also browse the help files outside of the program using a web browser.  The help files are stored in src/main/resources/help.
 
 A compiled version is available: https://drive.google.com/folderview?id=0B1312_6UqRHPRXF0bUZOYzcwSkk&usp=sharing.  Download the desired archive file and extract the files to a directory of your choice.  The files are signed with the GPG key for Ronald.Hoffman6@gmail.com (D6190F05).
 
