@@ -1,14 +1,16 @@
-# Build directories
-classes/
-doc/
+# Build Directories #
+target/
 package/
 
-# Build files
-*.class
-
 # Package Files #
+dependency-reduced-pom.xml
 *.jar
 *.war
 *.ear
 *.zip
+*.tar
+*.gz
+
+# NetBeans IDE Files #
+nb*.xml
 
