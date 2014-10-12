@@ -25,6 +25,7 @@ import java.util.Properties;
 import java.util.TreeSet;
 
 import java.io.*;
+import java.nio.channels.FileLock;
 
 import javax.swing.*;
 
@@ -34,21 +35,27 @@ import javax.swing.*;
  */
 public final class Main {
 
+    /** File separator */
+    public static String fileSeparator;
+
+    /** Line separator */
+    public static String lineSeparator;
+
     /** Application data directory */
     public static String dataPath;
-    
+
     /** Application identifier */
     public static String applicationID;
-    
+
     /** Application name */
     public static String applicationName;
-    
+
     /** Application version */
     public static String applicationVersion;
 
     /** Main application window */
     public static MainWindow mainWindow;
-    
+
     /** Help window */
     public static HelpWindow helpWindow;
 
@@ -60,9 +67,15 @@ public final class Main {
 
     /** Database modified */
     public static boolean dataModified=false;
-    
+
     /** Transaction database */
     public static Database database;
+
+    /** Application lock file */
+    public static RandomAccessFile lockFile;
+
+    /** Application lock */
+    public static FileLock fileLock;
 
     /** Deferred exception text */
     private static String deferredText;
@@ -81,8 +94,10 @@ public final class Main {
             //
             // Initialize the application variables
             //
-            dataPath = System.getProperty("user.home")+"\\My Documents\\My Money";
-            propFile = new File(dataPath+"\\MyMoney.properties");
+            fileSeparator = System.getProperty("file.separator");
+            lineSeparator = System.getProperty("line.separator");
+            dataPath = System.getProperty("user.home")+fileSeparator+"My Documents"+fileSeparator+"My Money";
+            propFile = new File(dataPath+fileSeparator+"MyMoney.properties");
             properties = new Properties();
             AccountRecord.accounts = new TreeSet<>();
             CategoryRecord.categories = new TreeSet<>();
@@ -117,6 +132,15 @@ public final class Main {
                 }
             }
             //
+            // Open the application lock file
+            //
+            lockFile = new RandomAccessFile(dataPath+fileSeparator+".lock", "rw");
+            fileLock = lockFile.getChannel().tryLock();
+            if (fileLock == null) {
+                JOptionPane.showMessageDialog(null, "MyMoney is already running", "Error", JOptionPane.ERROR_MESSAGE);
+                System.exit(1);
+            }
+            //
             // Save the system properties for debug purposes
             //
             Main.properties.setProperty("java.version", System.getProperty("java.version"));
@@ -128,7 +152,7 @@ public final class Main {
             //
             // Load the current transaction database
             //
-            database = new Database(dataPath+"\\MyMoney.database");
+            database = new Database(dataPath+fileSeparator+"MyMoney.database");
             database.load();
             //
             // Process scheduled transactions

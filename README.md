@@ -33,11 +33,11 @@ I use the Netbeans IDE but any build environment with Maven and the Java compile
 
 Here are the steps for a manual build.  You will need to install Maven 3 and Java SE Development Kit 7 if you don't already have them.
 
-  - Create the executable: mvn clean install
+  - Create the executable: mvn clean package
   - [Optional] Create the documentation: mvn javadoc:javadoc
-  - [Optional] Copy target/MyMoney-v.r.jar to wherever you want to store the executable.
+  - [Optional] Copy target/MyMoney-v.r.m.jar to wherever you want to store the executable.
   - Create a shortcut to start MyMoney using javaw.exe. 
   
-		javaw -Xmx256m -jar MyMoney-v.r.jar
+		javaw -Xmx192m -jar MyMoney-v.r.m.jar
 
 	

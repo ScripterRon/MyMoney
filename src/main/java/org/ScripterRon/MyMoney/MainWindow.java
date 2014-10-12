@@ -97,12 +97,12 @@ public final class MainWindow extends JFrame implements ActionListener {
 
         menu = new JMenu("File");
         menu.setMnemonic(KeyEvent.VK_F);
-        
+
         menuItem = new JMenuItem("Archive");
         menuItem.setActionCommand("archive");
         menuItem.addActionListener(this);
         menu.add(menuItem);
-        
+
         menuItem = new JMenuItem("Open");
         menuItem.setActionCommand("open");
         menuItem.addActionListener(this);
@@ -135,7 +135,7 @@ public final class MainWindow extends JFrame implements ActionListener {
         //
         // Add the "Objects" menu to the menu bar
         //
-        // The "Objects" menu contains the "Accounts", "Categories", 
+        // The "Objects" menu contains the "Accounts", "Categories",
         // "Schedules" and "Securities" items
         //
         menu = new JMenu("Objects");
@@ -160,12 +160,12 @@ public final class MainWindow extends JFrame implements ActionListener {
         menuItem.setActionCommand("edit securities");
         menuItem.addActionListener(this);
         menu.add(menuItem);
-        
+
         menuBar.add(menu);
         //
         // Add the "Calculators" menu to the menu bar
         //
-        // The "Calculators" menu contains the "Amortization", 
+        // The "Calculators" menu contains the "Amortization",
         // "Compound Interest" and "Yield to Maturity" items
         //
         menu = new JMenu("Calculators");
@@ -175,7 +175,7 @@ public final class MainWindow extends JFrame implements ActionListener {
         menuItem.setActionCommand("calculate amortization");
         menuItem.addActionListener(this);
         menu.add(menuItem);
-        
+
         menuItem = new JMenuItem("Compound Interest");
         menuItem.setActionCommand("calculate compound interest");
         menuItem.addActionListener(this);
@@ -185,7 +185,7 @@ public final class MainWindow extends JFrame implements ActionListener {
         menuItem.setActionCommand("calculate yield to maturity");
         menuItem.addActionListener(this);
         menu.add(menuItem);
-        
+
         menuBar.add(menu);
 
         //
@@ -205,7 +205,7 @@ public final class MainWindow extends JFrame implements ActionListener {
         //
         // Add the "Reports" menu to the menu bar
         //
-        // The "Reports" menu contains the "Amortization", "Capital Gains", 
+        // The "Reports" menu contains the "Amortization", "Capital Gains",
         // "Investments" and "Transactions" items
         //
         menu = new JMenu("Reports");
@@ -215,7 +215,7 @@ public final class MainWindow extends JFrame implements ActionListener {
         menuItem.setActionCommand("amortization report");
         menuItem.addActionListener(this);
         menu.add(menuItem);
-        
+
         menuItem = new JMenuItem("Capital Gains");
         menuItem.setActionCommand("capital gains report");
         menuItem.addActionListener(this);
@@ -258,7 +258,7 @@ public final class MainWindow extends JFrame implements ActionListener {
         menuItem.setActionCommand("help");
         menuItem.addActionListener(this);
         menu.add(menuItem);
-        
+
         menuItem = new JMenuItem("About");
         menuItem.setActionCommand("about");
         menuItem.addActionListener(this);
@@ -422,10 +422,10 @@ public final class MainWindow extends JFrame implements ActionListener {
             Main.logException("Exception while processing action event", exc);
         }
     }
-    
+
     /**
      * Display help
-     * 
+     *
      * @param       page            Help page
      */
     public void displayHelp(String page) {
@@ -595,7 +595,7 @@ public final class MainWindow extends JFrame implements ActionListener {
 
         return contentPaneChanged;
     }
-    
+
     /**
      * Open another database
      *
@@ -603,7 +603,6 @@ public final class MainWindow extends JFrame implements ActionListener {
      * @exception       IOException     Unable to read application data
      */
     private void openDatabase() throws DBException, IOException {
-        
         //
         // Save the current database if it has been modified
         //
@@ -615,7 +614,6 @@ public final class MainWindow extends JFrame implements ActionListener {
 
             Main.dataModified = false;
         }
-
         //
         // Open the new database
         //
@@ -630,7 +628,7 @@ public final class MainWindow extends JFrame implements ActionListener {
             buildViewMenu();
         }
     }
-    
+
     /**
      * Save the database
      *
@@ -641,7 +639,7 @@ public final class MainWindow extends JFrame implements ActionListener {
             Main.database.save();
             Main.dataModified = false;
             setTitle(null);
-        }        
+        }
     }
 
     /**
@@ -650,7 +648,6 @@ public final class MainWindow extends JFrame implements ActionListener {
      * @exception       IOException     Unable to save application data
      */
     private void exitProgram() throws IOException {
-
         //
         // Remember the current window position and size unless the window
         // is minimized
@@ -661,7 +658,6 @@ public final class MainWindow extends JFrame implements ActionListener {
             Main.properties.setProperty("window.main.position", p.x+","+p.y);
             Main.properties.setProperty("window.main.size", d.width+","+d.height);
         }
-
         //
         // Save the application data
         //
@@ -673,12 +669,18 @@ public final class MainWindow extends JFrame implements ActionListener {
             if (option == JOptionPane.YES_OPTION)
                 Main.database.save();
         }
-
         //
         // Save the application properties
         //
         Main.saveProperties();
-
+        //
+        // Close the application lock file
+        //
+        try {
+            Main.fileLock.release();
+            Main.lockFile.close();
+        } catch (IOException exc) {
+        }
         //
         // All done
         //
@@ -691,7 +693,7 @@ public final class MainWindow extends JFrame implements ActionListener {
     private void aboutMyMoney() {
         StringBuilder info = new StringBuilder(256);
         info.append(String.format("<html>%s Version %s<br>", Main.applicationName, Main.applicationVersion));
-        
+
         info.append("<br>User name: ");
         info.append((String)System.getProperty("user.name"));
 
@@ -718,26 +720,26 @@ public final class MainWindow extends JFrame implements ActionListener {
 
         info.append("<br>Java class path: ");
         info.append((String)System.getProperty("java.class.path"));
-        
+
         info.append("<br><br>Current Java memory usage: ");
         info.append(String.format("%,.3f MB", (double)Runtime.getRuntime().totalMemory()/(1024.0*1024.0)));
 
         info.append("<br>Maximum Java memory size: ");
         info.append(String.format("%,.3f MB", (double)Runtime.getRuntime().maxMemory()/(1024.0*1024.0)));
-        
+
         info.append("</html>");
         JOptionPane.showMessageDialog(this, info.toString(), "About MyMoney",
                                       JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     /**
      * Listen for window events
      */
     private class ApplicationWindowListener extends WindowAdapter {
-        
+
         /** Application window */
         private final JFrame window;
-        
+
         /**
          * Create the window listener
          *
