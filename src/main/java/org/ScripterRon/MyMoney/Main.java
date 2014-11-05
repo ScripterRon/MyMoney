@@ -96,7 +96,7 @@ public final class Main {
             //
             fileSeparator = System.getProperty("file.separator");
             lineSeparator = System.getProperty("line.separator");
-            dataPath = System.getProperty("user.home")+fileSeparator+"My Documents"+fileSeparator+"My Money";
+            dataPath = System.getProperty("user.home")+fileSeparator+"Documents"+fileSeparator+"My Money";
             propFile = new File(dataPath+fileSeparator+"MyMoney.properties");
             properties = new Properties();
             AccountRecord.accounts = new TreeSet<>();
