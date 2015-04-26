@@ -1,5 +1,5 @@
 /**
- * Copyright 2005-2014 Ronald W Hoffman
+ * Copyright 2005-2015 Ronald W Hoffman
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,18 +90,13 @@ public final class MainWindow extends JFrame implements ActionListener {
         //
         // Add the "File" menu to the menu bar
         //
-        // The "File" menu contains the "Open", "Archive", "Save" and "Exit" items.
+        // The "File" menu contains the "Open", "Save" and "Exit" items.
         //
         JMenu menu;
         JMenuItem menuItem;
 
         menu = new JMenu("File");
         menu.setMnemonic(KeyEvent.VK_F);
-
-        menuItem = new JMenuItem("Archive");
-        menuItem.setActionCommand("archive");
-        menuItem.addActionListener(this);
-        menu.add(menuItem);
 
         menuItem = new JMenuItem("Open");
         menuItem.setActionCommand("open");
@@ -313,7 +308,6 @@ public final class MainWindow extends JFrame implements ActionListener {
         //
         // "about" - Display information about this application
         // "amortization report" - Generate the bond accretion/amortization report
-        // "archive" - Archive transactions
         // "calculate amortization" - Calculate bond accretion/amortization
         // "calculate compound interest" - Calculate compound interest
         // "capital gains report" - Generate the capital gains report
@@ -345,8 +339,6 @@ public final class MainWindow extends JFrame implements ActionListener {
                 activeAccount = null;
                 setContentPane(new OverviewPanel());
                 contentPaneChanged = true;
-            } else if (action.equals("archive")) {
-                ArchiveDialog.showDialog(this);
             } else if (action.equals("overview")) {
                 activeAccount = null;
                 setContentPane(new OverviewPanel());
