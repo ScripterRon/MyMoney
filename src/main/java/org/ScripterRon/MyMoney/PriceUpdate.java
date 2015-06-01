@@ -15,13 +15,8 @@
  */
 package org.ScripterRon.MyMoney;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,10 +27,8 @@ import java.util.SortedSet;
 
 import java.io.*;
 import java.net.*;
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
 /**
  * Update the current price for all securities that are not hidden.  The
@@ -48,19 +41,20 @@ import javax.swing.event.*;
 public final class PriceUpdate extends JDialog implements ActionListener {
 
     /** Parent frame */
-    private JFrame parent;
+    private final JFrame parent;
 
     /** Worker thread */
-    private Thread worker;
+    private final Thread worker;
 
     /**
      * Create a price update instance
+     *
+     * @param   parent              Parent frame
      */
     public PriceUpdate(JFrame parent) {
         super(parent, "Update Prices", true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.parent = parent;
-
         //
         // Create the Cancel button
         //
@@ -71,7 +65,6 @@ public final class PriceUpdate extends JDialog implements ActionListener {
         button.setActionCommand("cancel");
         button.addActionListener(this);
         buttonPane.add(button);
-
         //
         // Set up the content pane
         //
@@ -83,7 +76,6 @@ public final class PriceUpdate extends JDialog implements ActionListener {
         contentPane.add(Box.createHorizontalStrut(45));
         contentPane.add(buttonPane);
         setContentPane(contentPane);
-
         //
         // Create a worker thread to do the actual work (we don't want to tie up
         // the AWT event dispatching thread)
@@ -93,20 +85,19 @@ public final class PriceUpdate extends JDialog implements ActionListener {
 
     /**
      * Update prices using an existing internet connection
+     *
+     * @param   parent              Parent frame
      */
     public static void onlineUpdate(JFrame parent) {
-
         //
         // Create the price update dialog
         //
         PriceUpdate update = new PriceUpdate(parent);
-
         //
         // Start the worker thread.  The worker thread will dispatch our
         // ActionListener method when it is done.
         //
         update.worker.start();
-
         //
         // Display the status dialog
         //
@@ -120,8 +111,8 @@ public final class PriceUpdate extends JDialog implements ActionListener {
      *
      * @param       ae              Action event
      */
+    @Override
     public void actionPerformed(ActionEvent ae) {
-
         //
         // Process the action command
         //
@@ -138,13 +129,13 @@ public final class PriceUpdate extends JDialog implements ActionListener {
                     JOptionPane.showMessageDialog(parent, "Price update complete",
                                                   "Update Prices", JOptionPane.INFORMATION_MESSAGE);
                     break;
-                    
+
                 case "update failed":
                     setVisible(false);
                     dispose();
                     Main.logException("Price update failed", (Exception)ae.getSource());
                     break;
-                    
+
                 case "cancel":
                     worker.interrupt();
                     break;
@@ -160,13 +151,13 @@ public final class PriceUpdate extends JDialog implements ActionListener {
     private final class WorkerThread extends Thread {
 
         /** Action listener */
-        private ActionListener listener;
+        private final ActionListener listener;
 
         /** Current exception */
         private Exception exception;
 
         /** Map ticker symbol to security record */
-        private Map<String,SecurityRecord> symbols;
+        private final Map<String,SecurityRecord> symbols;
 
         /**
          * Create a new worker thread
@@ -176,14 +167,14 @@ public final class PriceUpdate extends JDialog implements ActionListener {
         public WorkerThread(ActionListener listener) {
             super();
             this.listener = listener;
-            symbols = new HashMap<String,SecurityRecord>(SecurityRecord.securities.size()*2);
+            symbols = new HashMap<>(SecurityRecord.securities.size()*2);
         }
 
         /**
          * Run the executable code for the thread
          */
+        @Override
         public void run() {
-
             //
             // Get the current year, month and quarter
             //
@@ -191,7 +182,6 @@ public final class PriceUpdate extends JDialog implements ActionListener {
             cal.setTime(Main.getCurrentDate());
             int month = cal.get(Calendar.MONTH);
             int year = cal.get(Calendar.YEAR);
-
             //
             // Get the ticker symbols for all securities that are not hidden
             // and clean up the price history elements
@@ -200,14 +190,12 @@ public final class PriceUpdate extends JDialog implements ActionListener {
             urlString.append("http://finance.yahoo.com/d/quotes.csv?s=");
             boolean addPlus = false;
             for (SecurityRecord s : SecurityRecord.securities) {
-
                 //
                 // Skip securities without a ticker symbol
                 //
                 String symbol = s.getSymbol();
                 if (symbol.length() == 0)
                     continue;
-
                 //
                 // Clean up the price history entries keeping one entry for
                 // each quarter.  However, do not delete stock split entries.
@@ -224,7 +212,7 @@ public final class PriceUpdate extends JDialog implements ActionListener {
                     int currentQuarter = (currentMonth/3)+1;
                     if (currentYear == year && currentMonth == month)
                         break;
-                    
+
                     if (currentYear == lastYear && currentQuarter == lastQuarter) {
                         if (ph.getSplitRatio() == 0.0) {
                             it.remove();
@@ -235,26 +223,21 @@ public final class PriceUpdate extends JDialog implements ActionListener {
                         lastYear = currentYear;
                     }
                 }
-
                 //
                 // Don't update the price for a hidden security
                 //
                 if (s.isHidden())
                     continue;
-
                 //
                 // Add the security ticker symbol to the URL
                 //
                 if (addPlus)
                     urlString.append("+");
-
                 urlString.append(s.getSymbol());
                 symbols.put(symbol, s);
                 addPlus = true;
             }
-
-            urlString.append("&f=sl");
-
+            urlString.append("&f=so");
             //
             // Get the price quotes from Yahoo!
             //
@@ -273,12 +256,12 @@ public final class PriceUpdate extends JDialog implements ActionListener {
                     Main.logException("Unable to close URL stream", rexc);
                 }
             }
-
             //
             // Notify the price update dialog that we are done.  This must be done
             // on the event dispatch thread.
             //
             SwingUtilities.invokeLater(new Runnable() {
+                @Override
                 public void run() {
                     ActionEvent ae;
                     if (exception == null)
@@ -302,25 +285,21 @@ public final class PriceUpdate extends JDialog implements ActionListener {
          */
         private void fileUpdate(InputStream in) throws IOException, ParseException {
             Scanner scanner = new Scanner(in);
-            Pattern pattern = Pattern.compile("\"([^\"]*)\",(\\d+\\.?\\d*),\"(\\d+/\\d+/\\d+)\"");
-            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-
+            Pattern pattern = Pattern.compile("\"([^\"]*)\",(\\d+\\.?\\d*)");
             while (scanner.hasNextLine()) {
                 if (scanner.findInLine(pattern) != null) {
                     MatchResult result = scanner.match();
                     String symbol = result.group(1);
-                    double price = Double.valueOf(result.group(2)).doubleValue();
-                    Date date = dateFormat.parse(result.group(3), new ParsePosition(0));
+                    double price = Double.valueOf(result.group(2));
                     SecurityRecord s = symbols.get(symbol);
                     if (s != null) {
-                        PriceHistory ph = new PriceHistory(date, price);
+                        PriceHistory ph = new PriceHistory(price);
                         SortedSet<PriceHistory> priceHistory = s.getPriceHistory();
                         priceHistory.remove(ph);
                         priceHistory.add(ph);
                         Main.dataModified = true;
                     }
                 }
-
                 scanner.nextLine();
             }
         }
