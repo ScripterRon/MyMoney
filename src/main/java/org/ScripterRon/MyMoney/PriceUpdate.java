@@ -1,5 +1,5 @@
 /**
- * Copyright 2005-2014 Ronald W Hoffman
+ * Copyright 2005-2017 Ronald W Hoffman
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,7 +72,7 @@ public final class PriceUpdate extends JDialog implements ActionListener {
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.setOpaque(true);
         contentPane.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
-        contentPane.add(new JLabel("Getting security prices from http://finance.yahoo.com"));
+        contentPane.add(new JLabel("Getting security prices from http://download.finance.yahoo.com"));
         contentPane.add(Box.createHorizontalStrut(45));
         contentPane.add(buttonPane);
         setContentPane(contentPane);
@@ -187,7 +187,7 @@ public final class PriceUpdate extends JDialog implements ActionListener {
             // and clean up the price history elements
             //
             StringBuilder urlString = new StringBuilder(256);
-            urlString.append("http://finance.yahoo.com/d/quotes.csv?s=");
+            urlString.append("http://download.finance.yahoo.com/d/quotes.csv?s=");
             boolean addPlus = false;
             for (SecurityRecord s : SecurityRecord.securities) {
                 //
@@ -237,7 +237,7 @@ public final class PriceUpdate extends JDialog implements ActionListener {
                 symbols.put(symbol, s);
                 addPlus = true;
             }
-            urlString.append("&f=so");
+            urlString.append("&f=sod1");
             //
             // Get the price quotes from Yahoo!
             //
@@ -281,7 +281,7 @@ public final class PriceUpdate extends JDialog implements ActionListener {
          *
          * The first field is the ticker symbol enclosed in quotes, the second
          * field is the current stock price and the third field is the date enclosed
-         * in quotes.  The remaining fields are ignored.
+         * in quotes.
          */
         private void fileUpdate(InputStream in) throws IOException, ParseException {
             Scanner scanner = new Scanner(in);
